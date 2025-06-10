@@ -1,0 +1,184 @@
+{
+  "build_a_thon_2025_question_bank": {
+    "metadata": {
+      "title": "Build-a-thon 2025 Master Question Bank",
+      "description": "Questions based on actual challenges from 2022-2024 Build-a-thons",
+      "total_questions": 87,
+      "last_updated": "2025-01-15",
+      "categories": ["Puzzles & Logic", "Technical Implementation", "Speed Building & Integration"],
+      "difficulty_levels": ["Entry", "Intermediate", "Advanced", "Boss Battle"]
+    },
+    "historical_challenges": {
+      "2024": [
+        "Navigate Lands of Ignition",
+        "Evade Kraken",
+        "Magical Tome interaction",
+        "Sphinx Riddles",
+        "Flying Dragon ally",
+        "Exchange Trading Post"
+      ],
+      "2023": [
+        "11 fantasy-themed challenges",
+        "MQTT integration",
+        "Driver configuration",
+        "Advanced scripting"
+      ],
+      "2022": [
+        "Script shaped like Ignition logo",
+        "HTTP POST challenge",
+        "Memory game recreation",
+        "Split container puzzles",
+        "Trend annotations",
+        "Hub & spoke calculations"
+      ]
+    },
+    "questions_by_category": {
+      "ascii_encoding": {
+        "description": "Common in elimination rounds",
+        "examples": [
+          {
+            "id": "ASC001",
+            "type": "decode",
+            "challenge": "Tag values: 73, 71, 78, 73, 84, 73, 79, 78",
+            "answer": "IGNITION",
+            "difficulty": "Entry",
+            "time_limit": 60
+          },
+          {
+            "id": "ASC002",
+            "type": "hex_decode",
+            "challenge": "Memory tags: [0x48, 0x45, 0x4C, 0x4C, 0x4F]",
+            "answer": "HELLO",
+            "difficulty": "Entry",
+            "time_limit": 45
+          }
+        ]
+      },
+      "http_challenges": {
+        "description": "2022 actual challenge type",
+        "examples": [
+          {
+            "id": "HTTP001",
+            "type": "implementation",
+            "challenge": "URL shows 'Please POST your team name to continue'",
+            "answer": "system.net.httpClient.post(url, headers, data)",
+            "difficulty": "Intermediate",
+            "time_limit": 120
+          }
+        ]
+      },
+      "script_debugging": {
+        "description": "Fix broken scripts under time pressure",
+        "examples": [
+          {
+            "id": "DEBUG001",
+            "type": "fix_errors",
+            "code": "def calculate_efficiency(good, total):\n    efficiency = good / totl * 100\n    if efficiency > 100\n        return 100\n    return round(efficency, 2)",
+            "errors": ["totl → total", "missing : after if", "efficency → efficiency"],
+            "difficulty": "Intermediate",
+            "time_limit": 90
+          }
+        ]
+      },
+      "architecture_math": {
+        "description": "2022 hub & spoke challenge",
+        "examples": [
+          {
+            "id": "ARCH001",
+            "type": "calculation",
+            "challenge": "5 sites, each connects to 2 hubs, hubs connect to each other",
+            "answer": 11,
+            "difficulty": "Intermediate",
+            "time_limit": 120
+          }
+        ]
+      },
+      "fantasy_riddles": {
+        "description": "2024 Sphinx-style riddles",
+        "examples": [
+          {
+            "id": "RID001",
+            "riddle": "I have many faces but no head, I can show you data but I'm not a spreadsheet",
+            "answer": "Perspective View",
+            "difficulty": "Entry",
+            "time_limit": 30
+          }
+        ]
+      },
+      "speed_building": {
+        "description": "Finals-style rapid development",
+        "examples": [
+          {
+            "id": "SPEED001",
+            "challenge": "Create 100 memory tags named Tank_001 to Tank_100",
+            "solution_type": "script",
+            "time_limit": 120,
+            "difficulty": "Advanced"
+          },
+          {
+            "id": "SPEED002",
+            "challenge": "Build complete tank monitor with level, alarms, trend, controls",
+            "time_limit": 300,
+            "difficulty": "Boss Battle"
+          }
+        ]
+      },
+      "integration_challenges": {
+        "description": "Connect multiple systems",
+        "examples": [
+          {
+            "id": "INT001",
+            "systems": ["Modbus", "REST API", "SQL", "MQTT"],
+            "time_limit": 600,
+            "difficulty": "Boss Battle"
+          }
+        ]
+      }
+    },
+    "practice_recommendations": {
+      "daily": [
+        "ASCII/hex conversion practice",
+        "HTTP client scripting",
+        "Quick tag creation"
+      ],
+      "weekly": [
+        "Timed debugging challenges",
+        "Architecture design problems",
+        "Integration scenarios"
+      ],
+      "monthly": [
+        "Full mock elimination round",
+        "Team coordination drills",
+        "Tool proficiency tests"
+      ]
+    },
+    "tools_to_master": {
+      "essential": [
+        "Postman or REST client",
+        "ASCII table reference",
+        "Python string methods",
+        "SQL query optimizer",
+        "Hex/Binary converter"
+      ],
+      "speed_tools": [
+        "Keyboard shortcuts in Designer",
+        "Tag import/export CSV",
+        "Script console snippets",
+        "Component templates"
+      ]
+    },
+    "team_strategies": {
+      "role_assignments": {
+        "decoder": "Handles ASCII/encoding puzzles",
+        "scripter": "Fixes code and writes solutions",
+        "architect": "Solves system design problems",
+        "builder": "Rapid UI development",
+        "navigator": "Reads challenges and coordinates"
+      },
+      "communication": {
+        "tools": ["Discord", "Slack", "Teams"],
+        "practices": ["Clear role callouts", "Progress updates", "Help requests"]
+      }
+    }
+  }
+}

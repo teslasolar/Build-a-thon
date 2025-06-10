@@ -296,10 +296,11 @@
                 { name: 'README.md', icon: '📖', title: 'Getting Started', path: 'README.md' }
             ],
             quizzes: [
-                { name: 'Quiz_1_Foundation_Fortress.md', icon: '🏰', title: '1. Foundation Fortress' },
-                { name: 'Quiz_2_Script_Sorcery_Valley.md', icon: '🧙', title: '2. Script Sorcery Valley' },
-                { name: 'Quiz_3_Tag_Temple.md', icon: '🏛️', title: '3. Tag Temple' },
-                { name: 'Quiz_5_Perspective_Peak.md', icon: '🏔️', title: '5. Perspective Peak' }
+                { name: 'Quiz_Level_1_Puzzles.md', icon: '🧩', title: 'Level 1: Puzzles & Logic' },
+                { name: 'Quiz_Level_2_Technical.md', icon: '🔧', title: 'Level 2: Technical Implementation' },
+                { name: 'Quiz_Level_3_Speed_Building.md', icon: '⚡', title: 'Level 3: Speed Building' },
+                { name: 'Master_Question_Bank.json', icon: '📊', title: 'Master Question Bank' },
+                { name: 'practice_mode.html', icon: '🎮', title: 'Interactive Practice Mode', path: 'practice_mode.html' }
             ],
             qualifying: [
                 { name: 'Qualifying_Round_Guide.md', icon: '🚀', title: 'Qualifying Strategy' },
@@ -364,7 +365,14 @@
                 console.log('Current location:', window.location.href);
                 console.log('Full URL would be:', new URL(path, window.location.href).href);
                 
-                // Fetch the markdown file
+                // Check file type
+                if (filename.endsWith('.html')) {
+                    // Open HTML files in new tab
+                    window.open(path, '_blank');
+                    return;
+                }
+                
+                // Fetch the file
                 const response = await fetch(path);
                 
                 console.log('Response status:', response.status);
@@ -374,8 +382,21 @@
                     throw new Error(`File not found: ${response.status} ${response.statusText}`);
                 }
                 
-                const markdown = await response.text();
-                const html = marked.parse(markdown);
+                const content = await response.text();
+                let html;
+                
+                if (filename.endsWith('.json')) {
+                    // Format JSON with syntax highlighting
+                    try {
+                        const json = JSON.parse(content);
+                        html = '<pre class="code-block">' + JSON.stringify(json, null, 2) + '</pre>';
+                    } catch (e) {
+                        html = '<pre class="code-block">' + content + '</pre>';
+                    }
+                } else {
+                    // Parse markdown
+                    html = marked.parse(content);
+                }
                 
                 contentDiv.innerHTML = html;
                 

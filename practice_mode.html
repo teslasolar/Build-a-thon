@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build-a-thon Practice Mode - Based on Real Challenges</title>
+    <style>
+        :root {
+            --primary: #ff8c00;
+            --secondary: #1a1a1a;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), #ff6b00);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .challenge-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .challenge-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .challenge-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-card .year {
+            display: inline-block;
+            background: var(--info);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .practice-area {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .practice-area.active {
+            display: block;
+        }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        .timer.warning {
+            background: var(--warning);
+            color: var(--secondary);
+        }
+
+        .timer.danger {
+            background: var(--danger);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .question {
+            margin-bottom: 2rem;
+        }
+
+        .code-block {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ff6b00;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .result.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .result.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .stats {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            transition: width 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .timer, .stats {
+                position: static;
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏆 Build-a-thon Practice Mode</h1>
+        <p>Train with actual challenges from 2022-2024 competitions</p>
+    </div>
+
+    <div class="timer" id="timer">00:00</div>
+
+    <div class="container">
+        <div class="challenge-selector" id="challengeSelector">
+            <div class="challenge-card" onclick="startChallenge('ascii')">
+                <span class="year">2022-2024</span>
+                <h3>ASCII/Encoding Puzzles</h3>
+                <p>Decode tag values, hex conversion, binary messages. Common in elimination rounds.</p>
+                <small>15 challenges available</small>
+            </div>
+
+            <div class="challenge-card" onclick="startChallenge('http')">
+                <span class="year">2022</span>
+                <h3>HTTP/POST Challenges</h3>
+                <p>REST API calls, POST requests, authentication headers. Real 2022 challenge!</p>
+                <small>8 challenges available</small>
+            </div>
+
+            <div class="challenge-card" onclick="startChallenge('debug')">
+                <span class="year">2022-2023</span>
+                <h3>Script Debugging</h3>
+                <p>Fix broken Python scripts under time pressure. Multiple bugs to find!</p>
+                <small>10 challenges available</small>
+            </div>
+
+            <div class="challenge-card" onclick="startChallenge('architecture')">
+                <span class="year">2022</span>
+                <h3>Architecture Math</h3>
+                <p>Hub & spoke calculations, connection counting, redundancy planning.</p>
+                <small>12 challenges available</small>
+            </div>
+
+            <div class="challenge-card" onclick="startChallenge('fantasy')">
+                <span class="year">2023-2024</span>
+                <h3>Fantasy Riddles</h3>
+                <p>Sphinx riddles, kraken escape, magical tome puzzles. Lands of Ignition!</p>
+                <small>20 challenges available</small>
+            </div>
+
+            <div class="challenge-card" onclick="startChallenge('speed')">
+                <span class="year">Finals</span>
+                <h3>Speed Building</h3>
+                <p>Rapid development challenges. Build complete systems in minutes!</p>
+                <small>8 challenges available</small>
+            </div>
+        </div>
+
+        <div class="practice-area" id="practiceArea">
+            <h2 id="challengeTitle"></h2>
+            <div id="questionArea"></div>
+            <button onclick="checkAnswer()" id="submitBtn">Submit Answer</button>
+            <button onclick="showHome()" style="background: #6c757d; margin-left: 1rem;">Back to Menu</button>
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+
+    <div class="stats">
+        <strong>Session Stats</strong>
+        <div>Correct: <span id="correct">0</span></div>
+        <div>Total: <span id="total">0</span></div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <script>
+        // Actual challenge data based on past Build-a-thons
+        const challenges = {
+            ascii: {
+                title: "ASCII/Encoding Challenges",
+                questions: [
+                    {
+                        question: "Tag values contain: 73, 71, 78, 73, 84, 73, 79, 78",
+                        hint: "Convert ASCII decimal values to characters",
+                        answer: "IGNITION",
+                        time: 60
+                    },
+                    {
+                        question: "Hex values in tags: 0x47, 0x41, 0x54, 0x45, 0x57, 0x41, 0x59",
+                        hint: "Convert hexadecimal to ASCII",
+                        answer: "GATEWAY",
+                        time: 60
+                    },
+                    {
+                        question: "Binary message: 01001000 01001001",
+                        hint: "Binary to ASCII conversion",
+                        answer: "HI",
+                        time: 45
+                    }
+                ]
+            },
+            http: {
+                title: "HTTP/POST Challenges",
+                questions: [
+                    {
+                        question: "You visit a URL and see: 'Please POST your team name to continue'. Which function?",
+                        code: "A) system.net.httpGet()\nB) system.net.httpPost()\nC) system.net.httpClient.post()\nD) system.web.post()",
+                        answer: "C",
+                        time: 30
+                    },
+                    {
+                        question: "Add Bearer token 'ABC123' to request header. What's the header key?",
+                        answer: "Authorization",
+                        time: 45
+                    }
+                ]
+            },
+            debug: {
+                title: "Script Debugging",
+                questions: [
+                    {
+                        question: "Fix this script (3 bugs):",
+                        code: "def calculate_efficiency(good, total):\n    efficiency = good / totl * 100\n    if efficiency > 100\n        return 100\n    return round(efficency, 2)",
+                        hint: "Look for: typos, syntax errors",
+                        answer: "totl→total, missing :, efficency→efficiency",
+                        time: 90
+                    }
+                ]
+            },
+            architecture: {
+                title: "Architecture Math",
+                questions: [
+                    {
+                        question: "5 sites, each connects to 2 hubs, hubs connect to each other. Total connections?",
+                        hint: "Count each connection once",
+                        answer: "11",
+                        time: 120
+                    },
+                    {
+                        question: "3 sites need primary and backup gateway connections. Gateways are connected. Min connections?",
+                        answer: "7",
+                        time: 90
+                    }
+                ]
+            },
+            fantasy: {
+                title: "Fantasy Riddles (Lands of Ignition)",
+                questions: [
+                    {
+                        question: "Sphinx asks: 'I have many faces but no head, I show data but I'm not a spreadsheet. What am I?'",
+                        answer: "Perspective View",
+                        time: 30
+                    },
+                    {
+                        question: "The kraken blocks North, South, East. Dragon flies over water. Which way to the Gateway Tower?",
+                        answer: "West",
+                        time: 45
+                    }
+                ]
+            },
+            speed: {
+                title: "Speed Building Challenges",
+                questions: [
+                    {
+                        question: "Create 100 memory tags named Tank_001 to Tank_100. What's the key function?",
+                        hint: "Think about tag configuration via script",
+                        answer: "system.tag.configure",
+                        time: 60
+                    }
+                ]
+            }
+        };
+
+        let currentChallenge = null;
+        let currentQuestion = 0;
+        let timer = null;
+        let timeLeft = 0;
+        let stats = { correct: 0, total: 0 };
+
+        function startChallenge(type) {
+            currentChallenge = challenges[type];
+            currentQuestion = 0;
+            document.getElementById('challengeSelector').style.display = 'none';
+            document.getElementById('practiceArea').classList.add('active');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= currentChallenge.questions.length) {
+                alert('Challenge complete! ' + stats.correct + '/' + currentChallenge.questions.length + ' correct');
+                showHome();
+                return;
+            }
+
+            const q = currentChallenge.questions[currentQuestion];
+            document.getElementById('challengeTitle').textContent = currentChallenge.title;
+            
+            let html = `<div class="question"><h3>Challenge ${currentQuestion + 1}</h3><p>${q.question}</p>`;
+            
+            if (q.code) {
+                html += `<pre class="code-block">${q.code}</pre>`;
+            }
+            
+            if (q.hint) {
+                html += `<p><small>Hint: ${q.hint}</small></p>`;
+            }
+            
+            html += `<input type="text" class="answer-input" id="answerInput" placeholder="Your answer..." onkeypress="if(event.key==='Enter') checkAnswer()">`;
+            html += `</div>`;
+            
+            document.getElementById('questionArea').innerHTML = html;
+            document.getElementById('answerInput').focus();
+            document.getElementById('result').style.display = 'none';
+            
+            startTimer(q.time || 60);
+        }
+
+        function startTimer(seconds) {
+            clearInterval(timer);
+            timeLeft = seconds;
+            document.getElementById('timer').style.display = 'block';
+            updateTimer();
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('submitBtn').disabled = true;
+                    showResult(false, 'Time\'s up!');
+                }
+            }, 1000);
+        }
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            const timerEl = document.getElementById('timer');
+            timerEl.classList.remove('warning', 'danger');
+            if (timeLeft <= 10) timerEl.classList.add('danger');
+            else if (timeLeft <= 30) timerEl.classList.add('warning');
+        }
+
+        function checkAnswer() {
+            const answer = document.getElementById('answerInput').value.trim();
+            const correct = currentChallenge.questions[currentQuestion].answer;
+            
+            const isCorrect = answer.toLowerCase() === correct.toLowerCase();
+            
+            clearInterval(timer);
+            stats.total++;
+            if (isCorrect) stats.correct++;
+            
+            updateStats();
+            showResult(isCorrect, isCorrect ? 'Correct!' : `Incorrect. Answer: ${correct}`);
+            
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 2000);
+        }
+
+        function showResult(correct, message) {
+            const result = document.getElementById('result');
+            result.className = 'result ' + (correct ? 'correct' : 'incorrect');
+            result.textContent = message;
+            result.style.display = 'block';
+        }
+
+        function updateStats() {
+            document.getElementById('correct').textContent = stats.correct;
+            document.getElementById('total').textContent = stats.total;
+            const percentage = stats.total > 0 ? (stats.correct / stats.total * 100) : 0;
+            document.getElementById('progress').style.width = percentage + '%';
+        }
+
+        function showHome() {
+            document.getElementById('challengeSelector').style.display = 'grid';
+            document.getElementById('practiceArea').classList.remove('active');
+            document.getElementById('timer').style.display = 'none';
+            clearInterval(timer);
+        }
+    </script>
+</body>
+</html>
