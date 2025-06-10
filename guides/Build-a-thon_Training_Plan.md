@@ -4,7 +4,7 @@
 ### Event Details
 - **ICC Date**: September 16-18, 2025
 - **Location**: SAFE Credit Union Convention & Performing Arts District, Sacramento, CA
-- **Build-a-thon Qualifying Round**: Early August 2025 (likely August 1st or 7th, 1 PM PDT)
+- **Build-a-thon Qualifying Round**: Early August 2025 (likely August 7th, 1 PM PDT)
 - **Build-a-thon Finals**: September 18, 2025 (top 2 teams from qualifying)
 
 ### Competition Format
