@@ -1,11 +1,15 @@
-# Build-a-thon 2025 Elimination Challenge Examples
-## Based on Previous Years' Actual Challenges
+# Build-a-thon 2025 Elimination Challenge Preparation Guide
 
-### Historical Context
+## Historical Context
 - **2024**: 26 teams, August 1st (Thursday) - Fantasy theme with kraken, magical tome, Sphinx riddles
 - **2023**: 33 teams, July 18th (Tuesday) - 11 challenges covering MQTT, drivers, scripting
 - **2022**: Multi-round format with puzzle/riddle focus
 - **2025**: Expected August 7th (Thursday) - Following pattern of early August
+
+> **📁 Note**: Detailed examples from each year are now organized in the `/archives` directory:
+> - `/archives/2022/2022_Challenge_Examples.md`
+> - `/archives/2023/2023_Challenge_Examples.md`
+> - `/archives/2024/2024_Challenge_Examples.md`
 
 ### Confirmed Challenge Types from Past Events
 

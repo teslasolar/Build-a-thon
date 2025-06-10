@@ -38,6 +38,14 @@ npx http-server
 Build-a-thon/
 ├── index.html              # Interactive training portal
 ├── README.md               # This file
+├── archives/               # Historical challenge examples by year
+│   ├── README.md           # Archives overview and evolution
+│   ├── 2022/               # 2022 challenge examples
+│   │   └── 2022_Challenge_Examples.md
+│   ├── 2023/               # 2023 challenge examples
+│   │   └── 2023_Challenge_Examples.md
+│   └── 2024/               # 2024 challenge examples
+│       └── 2024_Challenge_Examples.md
 ├── guides/                 # Training guides and plans
 │   ├── Build-a-thon_Training_Plan.md
 │   └── Quick_Reference_Card.md

@@ -87,6 +87,36 @@
         }
       ]
     },
+    "archives": {
+      "path": "archives",
+      "icon": "📚",
+      "files": [
+        {
+          "filename": "README.md",
+          "title": "Archives Overview",
+          "icon": "📊",
+          "description": "Evolution of Build-a-thon challenges 2022-2024"
+        },
+        {
+          "filename": "2022/2022_Challenge_Examples.md",
+          "title": "2022 Challenges",
+          "icon": "🧩",
+          "description": "Puzzle-focused challenges and architecture questions"
+        },
+        {
+          "filename": "2023/2023_Challenge_Examples.md",
+          "title": "2023 Challenges",
+          "icon": "🔧",
+          "description": "Technical deep-dive: MQTT, drivers, and scripting"
+        },
+        {
+          "filename": "2024/2024_Challenge_Examples.md",
+          "title": "2024 Challenges",
+          "icon": "🐉",
+          "description": "Fantasy-themed challenges with mythical elements"
+        }
+      ]
+    },
     "sessions": {
       "path": "sessions",
       "icon": "📅",
