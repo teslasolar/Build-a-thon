@@ -152,7 +152,7 @@ Feel free to:
 
 - **Training Start**: February 2025
 - **Application Deadline**: Mid-May 2025
-- **Build-a-thon Qualifying Round**: Early August 2025 (likely Aug 1 or 7, 1 PM PDT)
+- **Build-a-thon Qualifying Round**: Early August 2025 (likely Aug 7, 1 PM PDT)
 - **ICC 2025**: September 16-18, 2025
 - **Build-a-thon Finals**: September 18, 2025
 - **Location**: Sacramento, CA
