@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build-a-thon Historical Archives - Challenge Evolution 2022-2024</title>
+    <style>
+        :root {
+            --primary-color: #ff8c00;
+            --secondary-color: #1a1a1a;
+            --accent-color: #0084ff;
+            --bg-light: #f5f5f5;
+            --text-dark: #333;
+            --success: #28a745;
+            --2022-color: #9b59b6;
+            --2023-color: #e74c3c;
+            --2024-color: #3498db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .evolution-timeline {
+            position: relative;
+            padding: 2rem 0;
+            margin: 3rem 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--2022-color), var(--2023-color), var(--2024-color));
+            transform: translateX(-50%);
+        }
+
+        .year-section {
+            position: relative;
+            margin: 3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .year-section:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .year-bubble {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .year-2022 .year-bubble { background: var(--2022-color); }
+        .year-2023 .year-bubble { background: var(--2023-color); }
+        .year-2024 .year-bubble { background: var(--2024-color); }
+
+        .year-content {
+            flex: 1;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .year-section:nth-child(odd) .year-content {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        .year-section:nth-child(even) .year-content {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .year-content h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .year-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .year-2022 .stat-card { border-color: var(--2022-color); }
+        .year-2023 .stat-card { border-color: var(--2023-color); }
+        .year-2024 .stat-card { border-color: var(--2024-color); }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-types {
+            margin: 1.5rem 0;
+        }
+
+        .challenge-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.3rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .year-2022 .challenge-tag { background: var(--2022-color); }
+        .year-2023 .challenge-tag { background: var(--2023-color); }
+        .year-2024 .challenge-tag { background: var(--2024-color); }
+
+        .key-challenges {
+            margin-top: 1.5rem;
+        }
+
+        .challenge-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .challenge-item:hover {
+            transform: translateX(5px);
+        }
+
+        .challenge-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .view-details-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .view-details-btn:hover {
+            background: #ff6b00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.3);
+        }
+
+        .summary-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+        }
+
+        .summary-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .trend-card {
+            background: linear-gradient(135deg, var(--bg-light), white);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .trend-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 2rem 0;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 20px;
+            }
+
+            .year-section {
+                flex-direction: column !important;
+                margin-left: 40px;
+            }
+
+            .year-bubble {
+                left: 20px;
+            }
+
+            .year-content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 Build-a-thon Historical Archives</h1>
+        <p>Journey through the evolution of Build-a-thon challenges from 2022 to 2024. Learn from the past to prepare for 2025!</p>
+    </div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Training Portal</a>
+
+        <div class="evolution-timeline">
+            <div class="timeline-line"></div>
+
+            <!-- 2022 -->
+            <div class="year-section year-2022">
+                <div class="year-bubble">2022</div>
+                <div class="year-content">
+                    <h2>The Foundation Year</h2>
+                    <p>The inaugural Build-a-thon focused on puzzles, riddles, and foundational Ignition knowledge.</p>
+                    
+                    <div class="year-stats">
+                        <div class="stat-card">
+                            <h3>🧩</h3>
+                            <p>Puzzle Focus</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Multi</h3>
+                            <p>Round Format</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>🏗️</h3>
+                            <p>Architecture</p>
+                        </div>
+                    </div>
+
+                    <div class="challenge-types">
+                        <span class="challenge-tag">Code Puzzles</span>
+                        <span class="challenge-tag">HTTP Challenges</span>
+                        <span class="challenge-tag">Architecture Math</span>
+                        <span class="challenge-tag">Visual Puzzles</span>
+                    </div>
+
+                    <div class="key-challenges">
+                        <h4>Notable Challenges:</h4>
+                        <div class="challenge-item">
+                            <span class="challenge-icon">🎨</span>
+                            <div>
+                                <strong>Ignition Logo Script</strong> - Code shaped like the Ignition logo that executes
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <span class="challenge-icon">🌐</span>
+                            <div>
+                                <strong>HTTP POST Puzzle</strong> - URLs requiring specific HTTP methods
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <span class="challenge-icon">🎮</span>
+                            <div>
+                                <strong>Memory Game</strong> - Recreation in Ignition components
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="archives/2022/2022_Challenge_Examples.md" class="view-details-btn">View 2022 Details →</a>
+                </div>
+            </div>
+
+            <!-- 2023 -->
+            <div class="year-section year-2023">
+                <div class="year-bubble">2023</div>
+                <div class="year-content">
+                    <h2>Technical Deep Dive</h2>
+                    <p>Shifted focus to real-world technical challenges with 33 teams competing across 11 challenges.</p>
+                    
+                    <div class="year-stats">
+                        <div class="stat-card">
+                            <h3>33</h3>
+                            <p>Teams</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>11</h3>
+                            <p>Challenges</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>🔧</h3>
+                            <p>Technical</p>
+                        </div>
+                    </div>
+
+                    <div class="challenge-types">
+                        <span class="challenge-tag">MQTT</span>
+                        <span class="challenge-tag">Drivers</span>
+                        <span class="challenge-tag">Scripting</span>
+                        <span class="challenge-tag">Protocols</span>
+                        <span class="challenge-tag">Navigation</span>
+                    </div>
+
+                    <div class="key-challenges">
+                        <h4>Technical Focus Areas:</h4>
+                        <div class="challenge-item">
+                            <span class="challenge-icon">📡</span>
+                            <div>
+                                <strong>MQTT Configuration</strong> - Broker setup, topics, QoS levels
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <span class="challenge-icon">🔌</span>
+                            <div>
+                                <strong>Driver Challenges</strong> - OPC UA, Modbus, Allen-Bradley
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <span class="challenge-icon">🗺️</span>
+                            <div>
+                                <strong>Lands of Ignition</strong> - Navigate through themed map
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="archives/2023/2023_Challenge_Examples.md" class="view-details-btn">View 2023 Details →</a>
+                </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="year-section year-2024">
+                <div class="year-bubble">2024</div>
+                <div class="year-content">
+                    <h2>Fantasy Adventure</h2>
+                    <p>Full narrative framework with mythical creatures and technical challenges disguised as story elements.</p>
+                    
+                    <div class="year-stats">
+                        <div class="stat-card">
+                            <h3>26</h3>
+                            <p>Teams</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>🐉</h3>
+                            <p>Fantasy</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>📖</h3>
+                            <p>Story-Driven</p>
+                        </div>
+                    </div>
+
+                    <div class="challenge-types">
+                        <span class="challenge-tag">Kraken</span>
+                        <span class="challenge-tag">Magical Tome</span>
+                        <span class="challenge-tag">Sphinx Riddles</span>
+                        <span class="challenge-tag">Flying Dragon</span>
+                        <span class="challenge-tag">Trading Post</span>
+                    </div>
+
+                    <div class="key-challenges">
+                        <h4>Fantasy Elements:</h4>
+                        <div class="challenge-item">
+                            <span class="challenge-icon">🐙</span>
+                            <div>
+                                <strong>Kraken Encounter</strong> - Logic puzzle with timing elements
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <span class="challenge-icon">📚</span>
+                            <div>
+                                <strong>Magical Tome</strong> - Interactive component sequences
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <span class="challenge-icon">🦁</span>
+                            <div>
+                                <strong>Sphinx Riddles</strong> - Technical questions as riddles
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="archives/2024/2024_Challenge_Examples.md" class="view-details-btn">View 2024 Details →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h2>🔮 Evolution & 2025 Predictions</h2>
+            
+            <div class="trend-grid">
+                <div class="trend-card">
+                    <h3>📈 Increasing Complexity</h3>
+                    <ul>
+                        <li><strong>2022:</strong> Basic puzzles and architecture</li>
+                        <li><strong>2023:</strong> Real-world technical scenarios</li>
+                        <li><strong>2024:</strong> Narrative-driven challenges</li>
+                        <li><strong>2025:</strong> Expect multi-layered puzzles combining all elements</li>
+                    </ul>
+                </div>
+
+                <div class="trend-card">
+                    <h3>🎭 Thematic Evolution</h3>
+                    <ul>
+                        <li>From pure technical to story-based</li>
+                        <li>Fantasy elements becoming prominent</li>
+                        <li>Interactive and visual components</li>
+                        <li>Team collaboration requirements</li>
+                    </ul>
+                </div>
+
+                <div class="trend-card">
+                    <h3>💡 Skills to Master</h3>
+                    <ul>
+                        <li>HTTP/REST API proficiency</li>
+                        <li>Python scripting speed</li>
+                        <li>Pattern recognition</li>
+                        <li>Component manipulation</li>
+                        <li>Database optimization</li>
+                        <li>Creative problem-solving</li>
+                    </ul>
+                </div>
+
+                <div class="trend-card">
+                    <h3>🎯 2025 Preparation Tips</h3>
+                    <ul>
+                        <li>Practice ALL past challenge types</li>
+                        <li>Form specialized team roles</li>
+                        <li>Prepare tool arsenal (Postman, etc.)</li>
+                        <li>Study fantasy gaming mechanics</li>
+                        <li>Focus on speed AND accuracy</li>
+                        <li>Expect the unexpected!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

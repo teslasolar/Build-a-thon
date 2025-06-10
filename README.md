@@ -10,6 +10,11 @@
 4. Wait 5-10 minutes for initial deployment
 5. Visit `https://[your-username].github.io/[repo-name]/`
 
+**Interactive Pages:**
+- **Main Portal**: `index.html` - Complete training program navigation
+- **Archive Timeline**: `archives.html` - Visual journey through 2022-2024 challenges
+- **Practice Mode**: `practice_mode.html` - Interactive quiz practice
+
 **For local testing:**
 ⚠️ **Important**: You MUST use a web server for local testing!
 
