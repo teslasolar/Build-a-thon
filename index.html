@@ -361,9 +361,14 @@
                 }
                 
                 console.log('Loading file from:', path); // Debug logging
+                console.log('Current location:', window.location.href);
+                console.log('Full URL would be:', new URL(path, window.location.href).href);
                 
                 // Fetch the markdown file
                 const response = await fetch(path);
+                
+                console.log('Response status:', response.status);
+                console.log('Response OK:', response.ok);
                 
                 if (!response.ok) {
                     throw new Error(`File not found: ${response.status} ${response.statusText}`);
@@ -406,13 +411,24 @@
                         <h3>Unable to load file</h3>
                         <p>Error: ${error.message}</p>
                         <p>Path attempted: ${fullPath || category + '/' + filename}</p>
-                        <p>This usually means:</p>
+                        
+                        <h4>Debugging Information:</h4>
                         <ul>
-                            <li>The file doesn't exist in the expected location</li>
-                            <li>There's a typo in the filename</li>
-                            <li>The site hasn't fully deployed yet (wait a few minutes)</li>
+                            <li><strong>Current URL:</strong> ${window.location.href}</li>
+                            <li><strong>Protocol:</strong> ${window.location.protocol}</li>
+                            <li><strong>Hostname:</strong> ${window.location.hostname}</li>
                         </ul>
-                        <p>Try refreshing the page or check the browser console for details.</p>
+                        
+                        <h4>Common Solutions:</h4>
+                        <ul>
+                            <li><strong>If testing locally:</strong> You need a web server. Open terminal and run:<br>
+                                <code>python -m http.server 8000</code><br>
+                                Then visit: <code>http://localhost:8000</code></li>
+                            <li><strong>If on GitHub Pages:</strong> Wait 5-10 minutes for deployment to complete</li>
+                            <li><strong>Clear cache:</strong> Press Ctrl+F5 (Windows) or Cmd+Shift+R (Mac)</li>
+                        </ul>
+                        
+                        <p>Check browser console (F12) for more details.</p>
                     </div>
                 `;
             }

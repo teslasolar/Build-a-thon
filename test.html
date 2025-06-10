@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Build-a-thon File Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        pre { background: #f8f9fa; padding: 10px; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>Build-a-thon Portal File Test</h1>
+    <p>This page tests if your markdown files are accessible.</p>
+    
+    <div id="results"></div>
+    
+    <h2>How to Fix Common Issues:</h2>
+    <ol>
+        <li><strong>If all tests fail with "Failed to fetch":</strong><br>
+            You're viewing the file locally. You need a web server:<br>
+            <code>python -m http.server 8000</code><br>
+            Then visit: <code>http://localhost:8000/test.html</code>
+        </li>
+        <li><strong>If on GitHub Pages and files not found:</strong><br>
+            - Wait 5-10 minutes for deployment<br>
+            - Check that you've pushed all files<br>
+            - Verify GitHub Pages is enabled in Settings
+        </li>
+    </ol>
+
+    <script>
+        const filesToTest = [
+            'README.md',
+            'guides/Build-a-thon_Training_Plan.md',
+            'guides/Quick_Reference_Card.md',
+            'quizzes/Quiz_1_Foundation_Fortress.md',
+            'qualifying/Qualifying_Round_Guide.md',
+            'sessions/Game_Mechanics_Guide.md'
+        ];
+
+        const resultsDiv = document.getElementById('results');
+
+        async function testFile(path) {
+            const testDiv = document.createElement('div');
+            testDiv.className = 'test';
+            
+            try {
+                const response = await fetch(path);
+                if (response.ok) {
+                    const content = await response.text();
+                    testDiv.className += ' success';
+                    testDiv.innerHTML = `
+                        <strong>✅ ${path}</strong><br>
+                        Status: ${response.status}<br>
+                        Size: ${content.length} characters<br>
+                        First 100 chars: <pre>${content.substring(0, 100)}...</pre>
+                    `;
+                } else {
+                    testDiv.className += ' error';
+                    testDiv.innerHTML = `<strong>❌ ${path}</strong><br>Status: ${response.status} ${response.statusText}`;
+                }
+            } catch (error) {
+                testDiv.className += ' error';
+                testDiv.innerHTML = `<strong>❌ ${path}</strong><br>Error: ${error.message}`;
+            }
+            
+            resultsDiv.appendChild(testDiv);
+        }
+
+        // Run tests
+        window.onload = () => {
+            resultsDiv.innerHTML = '<h2>Testing Files...</h2>';
+            filesToTest.forEach(file => testFile(file));
+        };
+    </script>
+</body>
+</html>

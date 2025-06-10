@@ -2,9 +2,10 @@
 ## Based on Previous Years' Actual Challenges
 
 ### Historical Context
-- **2024**: 26 teams, August 1st - Fantasy theme with kraken, magical tome, Sphinx riddles
-- **2023**: 33 teams, July 18th - 11 challenges covering MQTT, drivers, scripting
+- **2024**: 26 teams, August 1st (Thursday) - Fantasy theme with kraken, magical tome, Sphinx riddles
+- **2023**: 33 teams, July 18th (Tuesday) - 11 challenges covering MQTT, drivers, scripting
 - **2022**: Multi-round format with puzzle/riddle focus
+- **2025**: Expected August 7th (Thursday) - Following pattern of early August
 
 ### Confirmed Challenge Types from Past Events
 
@@ -179,7 +180,7 @@ Try this 90-minute practice session:
 - Fantasy theme likely continues
 - Expect 11 challenges
 - First 2 teams to finish win
-- August timeframe (watch for announcement)
+- **August 7th, 2025** (likely date - first Thursday)
 - Mix of puzzles and technical skills
 - Speed is EVERYTHING
 

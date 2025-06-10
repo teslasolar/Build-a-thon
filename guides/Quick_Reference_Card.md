@@ -106,7 +106,7 @@ system.perspective.sendMessage()
 - **Feb-Mar**: Foundations
 - **Apr-May**: Module mastery  
 - **Jun-Jul**: Advanced skills
-- **Early Aug**: QUALIFYING ROUND (online)
+- **Early Aug**: QUALIFYING ROUND (August 7th, online)
 - **Aug-Sep**: Finals prep (if qualified)
 - **Sep 16-18**: ICC & Build-a-thon finals!
 

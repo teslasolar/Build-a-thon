@@ -5,7 +5,7 @@
 The Build-a-thon qualifying round is an online elimination challenge where selected teams compete to be the **first two teams** to complete all challenges and earn a spot at the live finals during ICC.
 
 ### Key Information
-- **When**: Early August (historically August 1st or 7th)
+- **When**: Early August (likely August 7th, 2025 - first Thursday)
 - **Time**: 1:00 PM PDT
 - **Format**: Online, live-streamed on YouTube
 - **Duration**: Several hours (teams compete until 2 finish)
@@ -14,9 +14,11 @@ The Build-a-thon qualifying round is an online elimination challenge where selec
 ### Historical Patterns
 
 #### Recent Years
-- **2024**: 26 teams competed on August 1st
-- **2023**: 33 teams competed on July 18th
+- **2024**: 26 teams competed on August 1st (Thursday)
+- **2023**: 33 teams competed on July 18th (Tuesday)
 - **2022**: Multi-round format with eliminations
+
+**Pattern**: Usually early August, often Thursday
 
 #### Common Themes
 - Fantasy/adventure theme ("Lands of Ignition")

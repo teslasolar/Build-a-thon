@@ -7,12 +7,30 @@
 1. Push this repository to GitHub
 2. Go to Settings → Pages
 3. Select "Deploy from a branch" → main → / (root)
-4. Visit `https://[your-username].github.io/[repo-name]/`
+4. Wait 5-10 minutes for initial deployment
+5. Visit `https://[your-username].github.io/[repo-name]/`
 
-**For local viewing:**
-- Open `index.html` directly in your browser
-- Or use VS Code's Live Server extension
-- Or any other local web server
+**For local testing:**
+⚠️ **Important**: You MUST use a web server for local testing!
+
+**Option 1 - Python (Recommended):**
+```bash
+# In the Build-a-thon directory, run:
+python -m http.server 8000
+# Then visit: http://localhost:8000
+```
+
+**Option 2 - VS Code Live Server:**
+- Install Live Server extension
+- Right-click on index.html
+- Select "Open with Live Server"
+
+**Option 3 - Node.js:**
+```bash
+npx http-server
+```
+
+❌ **Will NOT work**: Opening index.html directly in browser (file:// protocol)
 
 ### 📁 Directory Structure
 

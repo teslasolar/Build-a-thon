@@ -65,11 +65,36 @@ To use a custom domain like `buildathon.inflexionpoint.com`:
 
 ## Troubleshooting
 
-If files don't load:
-- Make sure all file paths match exactly (case-sensitive)
-- Check that all files are committed and pushed
-- Clear browser cache and reload
-- Check browser console for errors
+### Files not loading (Failed to fetch error)
+
+**If testing locally:**
+- ❌ Don't open index.html directly (file:// won't work)
+- ✅ Use a web server: `python -m http.server 8000`
+- ✅ Use VS Code Live Server extension
+
+**If on GitHub Pages:**
+1. Check deployment status: Settings → Pages (should show green checkmark)
+2. Wait 5-10 minutes for initial deployment
+3. Clear browser cache (Ctrl+F5 or Cmd+Shift+R)
+4. Check exact URL format: `https://username.github.io/repository-name/`
+5. Ensure repository is public (or you have GitHub Pro for private Pages)
+
+### Using the test page
+
+Open `test.html` to verify all files are accessible:
+- Local: `http://localhost:8000/test.html`
+- GitHub Pages: `https://username.github.io/repo/test.html`
+
+This will show you exactly which files are loading correctly.
+
+### Common issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Failed to fetch | Local file access | Use web server |
+| 404 errors | Files not deployed | Wait for deployment |
+| Empty content | Markdown parsing error | Check file formatting |
+| Old content | Browser cache | Hard refresh (Ctrl+F5) |
 
 ## Local development
 
@@ -87,3 +112,11 @@ For local testing before pushing:
 - ❌ `.github/` folder - Not needed for basic Pages hosting
 
 GitHub Pages will automatically serve your `index.html` and all the markdown files without any server scripts!
+
+## Testing before deployment
+
+Use `test.html` to verify your setup:
+1. Start local server: `python -m http.server 8000`
+2. Open: `http://localhost:8000/test.html`
+3. All files should show green checkmarks
+4. If any fail, check the file paths and names
