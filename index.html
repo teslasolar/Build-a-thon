@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build-a-thon 2025 Training Portal - Inflexion Point</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #ff8c00;
+            --secondary-color: #1a1a1a;
+            --accent-color: #0084ff;
+            --bg-light: #f5f5f5;
+            --text-dark: #333;
+            --success: #28a745;
+            --warning: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #ff6b00);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .countdown {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 200px);
+        }
+
+        .sidebar {
+            width: 300px;
+            background: white;
+            padding: 2rem;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+
+        .sidebar h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .file-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .file-list li {
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .file-list li:hover {
+            background: var(--bg-light);
+            transform: translateX(5px);
+        }
+
+        .file-list li.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background: white;
+            margin: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-height: calc(100vh - 240px);
+        }
+
+        .content h1 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .content h2 {
+            color: var(--secondary-color);
+            margin: 2rem 0 1rem 0;
+        }
+
+        .content h3 {
+            color: var(--accent-color);
+            margin: 1.5rem 0 0.8rem 0;
+        }
+
+        .content pre {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .content code {
+            background: #f0f0f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .content th, .content td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        .content th {
+            background: var(--bg-light);
+            font-weight: bold;
+        }
+
+        .content ul, .content ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        .content li {
+            margin: 0.5rem 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            padding: 1rem;
+            border-radius: 5px;
+            color: #c00;
+            margin: 1rem 0;
+        }
+
+        .quiz-section {
+            background: #f0f8ff;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .icon {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                max-height: none;
+                order: 2;
+            }
+            
+            .content {
+                margin: 1rem;
+                order: 1;
+            }
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 30px;
+            border-radius: 15px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--success), var(--accent-color));
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏆 Build-a-thon 2025 Training Portal</h1>
+        <div class="subtitle">Inflexion Point - Quest for the Golden Gateway</div>
+        <div class="countdown">
+            <strong>⏰ Time to Qualifying Round:</strong> <span id="countdown"></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>📚 Training Guides</h2>
+            <ul class="file-list" id="guides-list"></ul>
+
+            <h2>🎮 Quiz Realms</h2>
+            <ul class="file-list" id="quizzes-list"></ul>
+
+            <h2>🏁 Qualifying Round</h2>
+            <ul class="file-list" id="qualifying-list"></ul>
+
+            <h2>📅 Sessions & Mechanics</h2>
+            <ul class="file-list" id="sessions-list"></ul>
+        </div>
+
+        <div class="content" id="content">
+            <div class="loading">
+                <h2>Welcome to Build-a-thon 2025 Training!</h2>
+                <p>Select a document from the sidebar to begin your journey.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%">0% Complete</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // File structure mapping
+        const fileStructure = {
+            guides: [
+                { name: 'Build-a-thon_Training_Plan.md', icon: '📋', title: 'Master Training Plan' },
+                { name: 'Quick_Reference_Card.md', icon: '🎯', title: 'Quick Reference' },
+                { name: 'README.md', icon: '📖', title: 'Getting Started', path: '../README.md' }
+            ],
+            quizzes: [
+                { name: 'Quiz_1_Foundation_Fortress.md', icon: '🏰', title: '1. Foundation Fortress' },
+                { name: 'Quiz_2_Script_Sorcery_Valley.md', icon: '🧙', title: '2. Script Sorcery Valley' },
+                { name: 'Quiz_3_Tag_Temple.md', icon: '🏛️', title: '3. Tag Temple' },
+                { name: 'Quiz_5_Perspective_Peak.md', icon: '🏔️', title: '5. Perspective Peak' }
+            ],
+            qualifying: [
+                { name: 'Qualifying_Round_Guide.md', icon: '🚀', title: 'Qualifying Strategy' },
+                { name: 'Elimination_Challenge_Examples_2025.md', icon: '💡', title: 'Past Challenges' }
+            ],
+            sessions: [
+                { name: 'Game_Mechanics_Guide.md', icon: '🎲', title: 'Game Mechanics' },
+                { name: 'Sample_Game_Session_Plan.md', icon: '📝', title: 'Sample Session' }
+            ]
+        };
+
+        let currentFile = null;
+        let completedFiles = JSON.parse(localStorage.getItem('completedFiles') || '[]');
+
+        // Countdown timer
+        function updateCountdown() {
+            const qualifyingDate = new Date('2025-08-01T13:00:00-07:00'); // 1 PM PDT
+            const now = new Date();
+            const diff = qualifyingDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                document.getElementById('countdown').textContent = 
+                    `${days} days, ${hours} hours, ${minutes} minutes`;
+            } else {
+                document.getElementById('countdown').textContent = 'IT\'S TIME! Good luck!';
+            }
+        }
+
+        // Update progress
+        function updateProgress() {
+            const totalFiles = Object.values(fileStructure).flat().length;
+            const completed = completedFiles.length;
+            const percentage = Math.round((completed / totalFiles) * 100);
+            
+            const progressFill = document.querySelector('.progress-fill');
+            if (progressFill) {
+                progressFill.style.width = percentage + '%';
+                progressFill.textContent = percentage + '% Complete';
+            }
+        }
+
+        // Load file content
+        async function loadFile(category, filename, fullPath = null) {
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = '<div class="loading">Loading...</div>';
+
+            try {
+                // Construct the file path
+                const path = fullPath || `./${category}/${filename}`;
+                
+                // Fetch the markdown file
+                const response = await fetch(path);
+                
+                if (!response.ok) {
+                    throw new Error('File not found');
+                }
+                
+                const markdown = await response.text();
+                const html = marked.parse(markdown);
+                
+                contentDiv.innerHTML = html;
+                
+                // Mark as completed
+                if (!completedFiles.includes(filename)) {
+                    completedFiles.push(filename);
+                    localStorage.setItem('completedFiles', JSON.stringify(completedFiles));
+                    updateProgress();
+                }
+                
+                // Update active state
+                document.querySelectorAll('.file-list li').forEach(li => {
+                    li.classList.remove('active');
+                });
+                event.target.closest('li').classList.add('active');
+                
+                currentFile = filename;
+                
+                // Scroll to top
+                contentDiv.scrollTop = 0;
+                
+            } catch (error) {
+                contentDiv.innerHTML = `
+                    <div class="error">
+                        <h3>Unable to load file</h3>
+                        <p>Error: ${error.message}</p>
+                        <p>Make sure the file exists in the correct directory.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Populate file lists
+        function populateFileLists() {
+            Object.entries(fileStructure).forEach(([category, files]) => {
+                const listElement = document.getElementById(`${category}-list`);
+                
+                files.forEach(file => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="icon">${file.icon}</span> ${file.title}`;
+                    li.onclick = () => loadFile(category, file.name, file.path);
+                    
+                    if (completedFiles.includes(file.name)) {
+                        li.innerHTML += ' ✅';
+                    }
+                    
+                    listElement.appendChild(li);
+                });
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateFileLists();
+            updateCountdown();
+            updateProgress();
+            setInterval(updateCountdown, 60000); // Update every minute
+        });
+    </script>
+</body>
+</html>

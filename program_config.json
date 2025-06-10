@@ -1,0 +1,148 @@
+{
+  "program": {
+    "name": "Build-a-thon 2025 Training Program",
+    "company": "Inflexion Point",
+    "theme": "Quest for the Golden Gateway",
+    "dates": {
+      "training_start": "2025-02-01",
+      "application_deadline": "2025-05-15",
+      "qualifying_round": "2025-08-01T13:00:00-07:00",
+      "icc_start": "2025-09-16",
+      "icc_end": "2025-09-18",
+      "finals": "2025-09-18"
+    }
+  },
+  "structure": {
+    "guides": {
+      "path": "guides",
+      "icon": "📚",
+      "files": [
+        {
+          "filename": "Build-a-thon_Training_Plan.md",
+          "title": "Master Training Plan",
+          "icon": "📋",
+          "description": "Complete 8-month training timeline and strategy"
+        },
+        {
+          "filename": "Quick_Reference_Card.md",
+          "title": "Quick Reference",
+          "icon": "🎯",
+          "description": "One-page summary of key concepts and rules"
+        }
+      ]
+    },
+    "quizzes": {
+      "path": "quizzes",
+      "icon": "🎮",
+      "files": [
+        {
+          "filename": "Quiz_1_Foundation_Fortress.md",
+          "title": "Foundation Fortress",
+          "icon": "🏰",
+          "realm": 1,
+          "difficulty": "Beginner",
+          "topics": ["Architecture", "Core Concepts", "Modules"]
+        },
+        {
+          "filename": "Quiz_2_Script_Sorcery_Valley.md",
+          "title": "Script Sorcery Valley",
+          "icon": "🧙",
+          "realm": 2,
+          "difficulty": "Intermediate",
+          "topics": ["Python", "Scripting", "Event Handlers"]
+        },
+        {
+          "filename": "Quiz_3_Tag_Temple.md",
+          "title": "Tag Temple",
+          "icon": "🏛️",
+          "realm": 3,
+          "difficulty": "Intermediate",
+          "topics": ["Tags", "UDTs", "Tag Scripts"]
+        },
+        {
+          "filename": "Quiz_5_Perspective_Peak.md",
+          "title": "Perspective Peak",
+          "icon": "🏔️",
+          "realm": 5,
+          "difficulty": "Advanced",
+          "topics": ["Perspective", "Mobile", "Responsive Design"]
+        }
+      ]
+    },
+    "qualifying": {
+      "path": "qualifying",
+      "icon": "🏁",
+      "files": [
+        {
+          "filename": "Qualifying_Round_Guide.md",
+          "title": "Qualifying Strategy",
+          "icon": "🚀",
+          "description": "Complete guide to the online elimination challenge"
+        },
+        {
+          "filename": "Elimination_Challenge_Examples_2025.md",
+          "title": "Past Challenges",
+          "icon": "💡",
+          "description": "Real examples from 2022-2024 competitions"
+        }
+      ]
+    },
+    "sessions": {
+      "path": "sessions",
+      "icon": "📅",
+      "files": [
+        {
+          "filename": "Game_Mechanics_Guide.md",
+          "title": "Game Mechanics",
+          "icon": "🎲",
+          "description": "How to run effective gamified training sessions"
+        },
+        {
+          "filename": "Sample_Game_Session_Plan.md",
+          "title": "Sample Session",
+          "icon": "📝",
+          "description": "45-minute session template with timing"
+        }
+      ]
+    }
+  },
+  "achievements": {
+    "individual": [
+      "First Blood",
+      "Speed Demon",
+      "Perfectionist",
+      "Comeback Kid",
+      "Helper"
+    ],
+    "team": [
+      "Synergy",
+      "Flawless Victory",
+      "Creative Solution",
+      "Realm Master"
+    ],
+    "legendary": [
+      "Grand Master",
+      "Realm Walker",
+      "The Mentor",
+      "Speed Lord",
+      "Lore Keeper"
+    ]
+  },
+  "scoring": {
+    "base_points": {
+      "beginner": 100,
+      "intermediate": 250,
+      "advanced": 500,
+      "boss_battle": 1000
+    },
+    "multipliers": {
+      "speed_bonus": 1.5,
+      "perfect_streak": 2.0
+    },
+    "penalties": {
+      "wrong_answer": -50,
+      "lifeline": -25,
+      "phone_use": -100
+    }
+  }
+}
