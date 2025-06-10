@@ -78,4 +78,12 @@ For local testing before pushing:
 - Or use VS Code with Live Server extension
 - Or any static file server
 
-That's it! Your Build-a-thon training portal is ready for GitHub Pages! 🚀
+## Files NOT needed for GitHub Pages
+
+**Already removed:**
+- ❌ `start_portal.bat` - Local server script (Windows)
+- ❌ `start_portal.sh` - Local server script (Mac/Linux)  
+- ❌ `_config.yml` - Jekyll config (using .nojekyll instead)
+- ❌ `.github/` folder - Not needed for basic Pages hosting
+
+GitHub Pages will automatically serve your `index.html` and all the markdown files without any server scripts!
