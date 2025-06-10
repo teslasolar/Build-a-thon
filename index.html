@@ -293,7 +293,7 @@
             guides: [
                 { name: 'Build-a-thon_Training_Plan.md', icon: '📋', title: 'Master Training Plan' },
                 { name: 'Quick_Reference_Card.md', icon: '🎯', title: 'Quick Reference' },
-                { name: 'README.md', icon: '📖', title: 'Getting Started', path: '../README.md' }
+                { name: 'README.md', icon: '📖', title: 'Getting Started', path: 'README.md' }
             ],
             quizzes: [
                 { name: 'Quiz_1_Foundation_Fortress.md', icon: '🏰', title: '1. Foundation Fortress' },
@@ -316,7 +316,7 @@
 
         // Countdown timer
         function updateCountdown() {
-            const qualifyingDate = new Date('2025-08-01T13:00:00-07:00'); // 1 PM PDT
+            const qualifyingDate = new Date('2025-08-07T13:00:00-07:00'); // 1 PM PDT - First Thursday of August
             const now = new Date();
             const diff = qualifyingDate - now;
 
@@ -346,19 +346,27 @@
         }
 
         // Load file content
-        async function loadFile(category, filename, fullPath = null) {
+        async function loadFile(category, filename, fullPath = null, clickEvent = null) {
             const contentDiv = document.getElementById('content');
             contentDiv.innerHTML = '<div class="loading">Loading...</div>';
 
             try {
-                // Construct the file path
-                const path = fullPath || `./${category}/${filename}`;
+                // Construct the file path - handle both relative and absolute paths
+                let path;
+                if (fullPath) {
+                    path = fullPath;
+                } else {
+                    // Use relative paths from the current location
+                    path = `${category}/${filename}`;
+                }
+                
+                console.log('Loading file from:', path); // Debug logging
                 
                 // Fetch the markdown file
                 const response = await fetch(path);
                 
                 if (!response.ok) {
-                    throw new Error('File not found');
+                    throw new Error(`File not found: ${response.status} ${response.statusText}`);
                 }
                 
                 const markdown = await response.text();
@@ -377,7 +385,14 @@
                 document.querySelectorAll('.file-list li').forEach(li => {
                     li.classList.remove('active');
                 });
-                event.target.closest('li').classList.add('active');
+                
+                // Find the clicked element
+                if (clickEvent && clickEvent.target) {
+                    const li = clickEvent.target.closest('li');
+                    if (li) {
+                        li.classList.add('active');
+                    }
+                }
                 
                 currentFile = filename;
                 
@@ -385,11 +400,19 @@
                 contentDiv.scrollTop = 0;
                 
             } catch (error) {
+                console.error('Error loading file:', error);
                 contentDiv.innerHTML = `
                     <div class="error">
                         <h3>Unable to load file</h3>
                         <p>Error: ${error.message}</p>
-                        <p>Make sure the file exists in the correct directory.</p>
+                        <p>Path attempted: ${fullPath || category + '/' + filename}</p>
+                        <p>This usually means:</p>
+                        <ul>
+                            <li>The file doesn't exist in the expected location</li>
+                            <li>There's a typo in the filename</li>
+                            <li>The site hasn't fully deployed yet (wait a few minutes)</li>
+                        </ul>
+                        <p>Try refreshing the page or check the browser console for details.</p>
                     </div>
                 `;
             }
@@ -403,7 +426,7 @@
                 files.forEach(file => {
                     const li = document.createElement('li');
                     li.innerHTML = `<span class="icon">${file.icon}</span> ${file.title}`;
-                    li.onclick = () => loadFile(category, file.name, file.path);
+                    li.onclick = (e) => loadFile(category, file.name, file.path, e);
                     
                     if (completedFiles.includes(file.name)) {
                         li.innerHTML += ' ✅';
